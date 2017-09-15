@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tech.michaelx.loadinglibrary.LoadingLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/loading_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:contentDescription="loadingBackground可以是drawable或者颜色"
+    android:padding="10dp"
+    app:emptyView="@layout/empty_layout"
+    app:errorView="@layout/failure_layout"
+    app:loadingAnimator="@animator/loading"
+    app:loadingBackground="#1296db"
+    app:loadingView="@layout/loading_layout"
+    app:retryLoadAlways="true">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="本页面使用属性自定义loading各种状态" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="使用注意事项：\n1. 不想使用默认的Progressbar，可以自定义LoadingView\n2. 设置EmptyView后，setEmptyDrawable()及setEmptyText()失效\n3. 同理，设置了ErrorView，setErrorDrawable()和setErrorText()失效" />
+
+</tech.michaelx.loadinglibrary.LoadingLayout>

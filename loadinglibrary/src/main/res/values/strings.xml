@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="content_empty">暂无数据</string>
+    <string name="fetch_data_failure">加载失败，点击重试</string>
+</resources>

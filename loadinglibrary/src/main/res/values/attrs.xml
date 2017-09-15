@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LoadingLayout">
+        <!--设置数据为空的layout-->
+        <attr name="emptyView" format="reference" />
+        <!--设置加载失败的layout-->
+        <attr name="errorView" format="reference" />
+        <!--设置加载中的layout-->
+        <attr name="loadingView" format="reference" />
+        <!--设置加载动画id-->
+        <attr name="loadingAnimator" format="reference" />
+        <!--设置加载中的背景，或者颜色-->
+        <attr name="loadingBackground" format="reference|color" />
+        <!--设置默认Progressbar的progress_drawable-->
+        <attr name="loadingProgressDrawable" format="reference" />
+        <!--设置数据为空时的图片-->
+        <attr name="emptyDrawable" format="reference" />
+        <!--设置数据为空时的提示语-->
+        <attr name="emptyText" format="string" />
+        <!--设置加载失败时的图片-->
+        <attr name="errorDrawable" format="reference" />
+        <!--设置加载失败时的提示语-->
+        <attr name="errorText" format="string" />
+        <!--设置是否总是点击重试，无论数据为空或者失败，默认false-->
+        <attr name="retryLoadAlways" format="boolean" />
+    </declare-styleable>
+</resources>
