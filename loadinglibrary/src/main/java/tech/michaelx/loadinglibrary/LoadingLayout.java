@@ -344,7 +344,9 @@ public class LoadingLayout extends FrameLayout implements View.OnClickListener {
      * 加载中
      */
     public void showLoading() {
-        ResCompat.setBackground(this, mLoadingBackground);
+        if (mLoadingBackground != null) {
+            ResCompat.setBackground(this, mLoadingBackground);
+        }
 
         if (mLoadingView != null) {
             mLoadingView.setVisibility(VISIBLE);
@@ -372,7 +374,9 @@ public class LoadingLayout extends FrameLayout implements View.OnClickListener {
      * 加载完成
      */
     public void loadComplete() {
-        ResCompat.setBackground(this, mBackground);
+        if (mBackground != null) {
+            ResCompat.setBackground(this, mBackground);
+        }
 
         for (int i = 0; i < mVisibilityList.size(); i++) {
             int visibility = (mVisibilityList.get(i) == VISIBLE ? VISIBLE :
@@ -380,7 +384,7 @@ public class LoadingLayout extends FrameLayout implements View.OnClickListener {
             getChildAt(i).setVisibility(visibility);
         }
 
-        if (mLoadingAnim != null && mLoadingAnim.isStarted()) {
+        if (mLoadingAnim != null) {
             mLoadingAnim.cancel();
         }
         if (mLoadingView != null) {
@@ -471,7 +475,6 @@ public class LoadingLayout extends FrameLayout implements View.OnClickListener {
         }
         if (mVisibilityList != null) {
             mVisibilityList.clear();
-            mVisibilityList = null;
         }
     }
 
