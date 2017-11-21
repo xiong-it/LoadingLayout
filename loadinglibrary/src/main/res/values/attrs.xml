@@ -23,5 +23,7 @@
         <attr name="errorText" format="string" />
         <!--设置是否总是点击重试，无论数据为空或者失败，默认false-->
         <attr name="retryLoadAlways" format="boolean" />
+        <!--设置自动显示加载调试-->
+        <attr name="showLoadingDebug" format="boolean" />
     </declare-styleable>
 </resources>

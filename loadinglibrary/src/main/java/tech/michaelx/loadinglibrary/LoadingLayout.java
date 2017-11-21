@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.util.ArrayMap;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,9 +24,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Author: michaelx
@@ -62,6 +60,8 @@ public class LoadingLayout extends FrameLayout implements View.OnClickListener {
     private Drawable mErrorDrawable;
     // 加载失败时的提示语
     private String mErrorText;
+    // 是否打开自动加载调试
+    private boolean mAutoLoadingDebug = false;
 
     // 是否总是点击重试，无论数据为空或者失败，默认只有在加载失败时需要点击重试
     private boolean mRetryLoadAlways;
@@ -73,8 +73,8 @@ public class LoadingLayout extends FrameLayout implements View.OnClickListener {
     // 加载过程中显示的背景
     private Drawable mLoadingBackground;
 
-    // 用以存储控件显示状mLoadingBackground态
-    private List<Integer> mVisibilityList = new ArrayList<>();
+    // 用以存储控件显示状态
+    private ArrayMap<View, Integer> mVisibilityMap = new ArrayMap<>();
 
     // 重试监听
     private OnRetryLoadListener mReLoadListener;
@@ -97,8 +97,10 @@ public class LoadingLayout extends FrameLayout implements View.OnClickListener {
         super.onFinishInflate();
         // 事先保存子控件显示状态，并隐藏所有子控件
         for (int i = 0; i < getChildCount(); i++) {
-            mVisibilityList.add(getChildAt(i).getVisibility());
-            getChildAt(i).setVisibility(GONE);
+            mVisibilityMap.put(getChildAt(i), getChildAt(i).getVisibility());
+            if (!mAutoLoadingDebug) {
+                getChildAt(i).setVisibility(GONE);
+            }
         }
 
         mLoadingBar = new ProgressBar(getContext());
@@ -112,7 +114,9 @@ public class LoadingLayout extends FrameLayout implements View.OnClickListener {
 
         addView(mLoadingBar, params);
 
-        showLoading();
+        if (!mAutoLoadingDebug) {
+            showLoading();
+        }
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -127,6 +131,7 @@ public class LoadingLayout extends FrameLayout implements View.OnClickListener {
         mLoadingBackground = ta.getDrawable(R.styleable.LoadingLayout_loadingBackground);
         mProgressDrawable = ta.getDrawable(R.styleable.LoadingLayout_loadingProgressDrawable);
         mRetryLoadAlways = ta.getBoolean(R.styleable.LoadingLayout_retryLoadAlways, false);
+        mAutoLoadingDebug = ta.getBoolean(R.styleable.LoadingLayout_showLoadingDebug, false);
 
         try {
             mLoadingView = LayoutInflater.from(context).inflate(loadingViewLayoutId, null);
@@ -190,7 +195,7 @@ public class LoadingLayout extends FrameLayout implements View.OnClickListener {
 
         if (mLoadingBackground == null) {
             mLoadingBackground = new ColorDrawable(ResourcesCompat.getColor(getResources(),
-                    android.R.color.white, null));
+                    android.R.color.white, context.getTheme()));
         }
     }
 
@@ -374,13 +379,13 @@ public class LoadingLayout extends FrameLayout implements View.OnClickListener {
     public void loadComplete() {
         ResCompat.setBackground(this, mBackground);
 
-        for (int i = 0; i < mVisibilityList.size(); i++) {
-            int visibility = (mVisibilityList.get(i) == VISIBLE ? VISIBLE :
-                    (mVisibilityList.get(i) == GONE ? GONE : INVISIBLE));
-            getChildAt(i).setVisibility(visibility);
+        for (View view : mVisibilityMap.keySet()) {
+            int visibility = (mVisibilityMap.get(view) == VISIBLE ? VISIBLE :
+                    (mVisibilityMap.get(view) == GONE ? GONE : INVISIBLE));
+            view.setVisibility(visibility);
         }
 
-        if (mLoadingAnim != null && mLoadingAnim.isStarted()) {
+        if (mLoadingAnim != null) {
             mLoadingAnim.cancel();
         }
         if (mLoadingView != null) {
@@ -469,9 +474,8 @@ public class LoadingLayout extends FrameLayout implements View.OnClickListener {
         if (mLoadingAnim != null) {
             mLoadingAnim.cancel();
         }
-        if (mVisibilityList != null) {
-            mVisibilityList.clear();
-            mVisibilityList = null;
+        if (mVisibilityMap != null) {
+            mVisibilityMap.clear();
         }
     }
 

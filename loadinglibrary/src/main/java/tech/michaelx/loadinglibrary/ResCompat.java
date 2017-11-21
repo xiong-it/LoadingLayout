@@ -11,6 +11,8 @@ import android.view.View;
 
 public class ResCompat {
     public static void setBackground(View view, Drawable bg) {
+        if (view == null) return;
+
         if (Build.VERSION.SDK_INT >= 16) {
             view.setBackground(bg);
         } else {
@@ -19,8 +21,10 @@ public class ResCompat {
     }
 
     public static Drawable getDrawable(View view, @DrawableRes int drawableId) {
+        if (view == null) return null;
+
         if (Build.VERSION.SDK_INT >= 21) {
-            return view.getResources().getDrawable(drawableId, null);
+            return view.getResources().getDrawable(drawableId, view.getContext().getTheme());
         } else {
             return view.getResources().getDrawable(drawableId);
         }

@@ -21,7 +21,7 @@ import tech.michaelx.loadinglibrary.LoadingLayout;
  * Created by michaelx on 2017/9/13.
  */
 
-public class RetryActivity extends AppCompatActivity implements View.OnClickListener, LoadingLayout.OnRetryLoadListener {
+public class RetryActivity extends AppCompatActivity implements LoadingLayout.OnRetryLoadListener {
     private SwipeRefreshLayout mRefreshLayout;
     private LoadingLayout mLoadingLayout;
     private RecyclerView mRecyclerView;
@@ -54,10 +54,11 @@ public class RetryActivity extends AppCompatActivity implements View.OnClickList
         mRetryBtn = (Button) findViewById(R.id.retry_btn);
         mCustomBtn1 = (Button) findViewById(R.id.custom1);
         mCustomBtn2 = (Button) findViewById(R.id.custom2);
+
         mRetryBtn.setVisibility(View.GONE);
+        mEmptyBtn.setVisibility(View.GONE);
         mCustomBtn1.setVisibility(View.GONE);
         mCustomBtn2.setVisibility(View.GONE);
-        mEmptyBtn.setOnClickListener(this);
 
         mLoadingLayout.setOnRetryLoadListener(this);
     }
@@ -74,12 +75,6 @@ public class RetryActivity extends AppCompatActivity implements View.OnClickList
                 mAdapter.notifyDataSetChanged();
             }
         }, 3000);
-    }
-
-    @Override
-    public void onClick(View v) {
-        // 跳转另一个空数据Activity
-        startActivity(new Intent(this, EmptyActivity.class));
     }
 
     @Override
