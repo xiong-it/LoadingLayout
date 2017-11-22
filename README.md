@@ -6,7 +6,7 @@
 # Compile
 打开你的app module中的build.gradle,添加依赖：
 ```groovy  
-compile 'tech.michaelx.loadinglibrary:loadinglibrary:1.0.1'
+compile 'tech.michaelx.loadinglibrary:loadinglibrary:1.0.2'
 ```  
 
 # Sample  
@@ -107,12 +107,16 @@ mLoadingLayout.showLoading();
 ![加载几种状态演示](https://raw.githubusercontent.com/xiong-it/LoadingLayout/master/output/LoadingLayout.gif) 
   
 # 注意事项  
-LoadingLayout需要依赖于`appcompat-v7`，请在工程中添加这两个依赖（版本可自定义，不建议低于25.3.1）：  
+LoadingLayout需要依赖于`appcompat-v7` & `support-annotations`，请在工程中添加这两个依赖（版本可自定义，不建议低于25.3.1）：  
 ```groove
-compile "com.android.support:appcompat-v7:25.3.1"  
+compile 'com.android.support:appcompat-v7:25.3.1'    
+compile 'com.android.support:support-annotations:25.3.1'   
 ```
   
 # changelog
+v1.0.2  
+解决first issue  
+  
 v1.0.1  
 添加一个自定义属性方便xml中预览布局  
 解决一个可能的空指针异常 
