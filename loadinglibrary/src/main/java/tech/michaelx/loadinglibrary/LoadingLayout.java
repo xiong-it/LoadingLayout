@@ -135,8 +135,23 @@ public class LoadingLayout extends FrameLayout implements View.OnClickListener {
 
         try {
             mLoadingView = LayoutInflater.from(context).inflate(loadingViewLayoutId, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
             mEmptyView = LayoutInflater.from(context).inflate(emptyViewLayoutId, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
             mErrorView = LayoutInflater.from(context).inflate(errorViewLayoutId, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
             mLoadingAnim = AnimatorInflater.loadAnimator(context, loadingAnimId);
         } catch (Exception e) {
             e.printStackTrace();
@@ -181,6 +196,7 @@ public class LoadingLayout extends FrameLayout implements View.OnClickListener {
         }
 
         ta.recycle();
+
         if (mLoadingView != null) {
             setLoadingView(mLoadingView);
         }
