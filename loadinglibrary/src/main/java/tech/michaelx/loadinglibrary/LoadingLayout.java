@@ -480,8 +480,8 @@ public class LoadingLayout extends FrameLayout implements View.OnClickListener {
 
     private void reload() {
         if (mReLoadListener != null) {
-            mReLoadListener.onReLoad();
             showLoading();
+            mReLoadListener.onReLoad();
         }
     }
 
